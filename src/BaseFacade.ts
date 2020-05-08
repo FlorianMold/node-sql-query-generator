@@ -196,23 +196,9 @@ export abstract class BaseFacade<EntityType extends AbstractModel<EntityType>> {
      * - callBackOnInsert: callback that is executed after the insert, last callback in array will not be executed
      *
      * @param attributes name-value pairs of attributes that should be inserted
-     * @param additionalInserts queries to execute in the transaction
      */
-    protected insertStatement(
-        attributes: SQLValueAttributes,
-        additionalInserts?: Array<{facade: any; entity: any}>): Query[] {
-
-        // array of queries
-        const funcArray: Query[] = [];
-        if (additionalInserts) {
-            for (const insert of additionalInserts) {
-                funcArray.push(insert.facade.getInsertQueryFn(insert.entity));
-            }
-        } else {
-            funcArray.push(this.getInsertQueryFn(attributes));
-        }
-
-        return funcArray;
+    protected insertStatement(attributes: SQLValueAttributes): Query {
+        return this.getInsertQueryFn(attributes);
     }
 
     /**
@@ -256,21 +242,9 @@ export abstract class BaseFacade<EntityType extends AbstractModel<EntityType>> {
      * entity: entity to insert
      *
      * @param attributes name-value pairs of the entity that should be changed
-     * @param additionalUpdates additionalUpdates to execute facade is for
      */
-    protected updateStatement(attributes: SQLValueAttributes,
-                                    additionalUpdates?: Array<{facade: any; entity: EntityType}>): Query[] {
-        // array of queries
-        const funcArray: Query[] = [];
-        if (additionalUpdates) {
-            for (const update of additionalUpdates) {
-                funcArray.push(update.facade.getUpdateQueryFn(update.entity));
-            }
-        }  else {
-            funcArray.push(this.getUpdateQueryFn(attributes));
-        }
-
-        return funcArray;
+    protected updateStatement(attributes: SQLValueAttributes): Query {
+        return this.getUpdateQueryFn(attributes);
     }
 
     /**
@@ -312,20 +286,9 @@ export abstract class BaseFacade<EntityType extends AbstractModel<EntityType>> {
      * with the passed attributes is executed. Otherwise the delete-queries of the passed facades are
      * executed with the given entity in the specified order.
      *
-     * @param additionalFacades an array of facades that provide delete-queries that should be executed.
      */
-    protected deleteStatement(additionalFacades?: any[]): Query[] {
-        // array of queries
-        const funcArray = [];
-        if (additionalFacades) {
-            for (const facade of additionalFacades) {
-                funcArray.push(facade.getDeleteQueryFn());
-            }
-        } else {
-            funcArray.push(this.getDeleteQueryFn());
-        }
-
-        return funcArray;
+    protected deleteStatement(): Query {
+        return this.getDeleteQueryFn();
     }
 
     /**

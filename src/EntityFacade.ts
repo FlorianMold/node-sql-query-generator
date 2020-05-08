@@ -54,7 +54,7 @@ export abstract class EntityFacade<EntityType extends AbstractModel<EntityType>>
      *
      * @param entity entity to insert
      */
-    public insert(entity: EntityType): Query[] {
+    public insert(entity: EntityType): Query {
         return this.insertStatement(this.getSQLInsertValueAttributes(entity));
     }
 
@@ -65,7 +65,7 @@ export abstract class EntityFacade<EntityType extends AbstractModel<EntityType>>
      *
      * @param entity entity to update
      */
-    public update(entity: EntityType): Query[] {
+    public update(entity: EntityType): Query {
         const attributes: SQLValueAttributes = this.getSQLUpdateValueAttributes(entity);
         return this.updateStatement(attributes);
     }
@@ -75,7 +75,7 @@ export abstract class EntityFacade<EntityType extends AbstractModel<EntityType>>
      * for the entities in the child-facade. If the function is not overwritten
      * than it returns 0, which indicates that nothing was deleted.
      */
-    public delete(): Query[] {
+    public delete(): Query {
         return this.deleteStatement();
     }
 
