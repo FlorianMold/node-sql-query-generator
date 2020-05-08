@@ -1,10 +1,10 @@
-import { BaseFacade } from "../../BaseFacade";
-import { Filter } from "../filter/Filter";
-import { SQLComparisonOperator } from "../sql/enums/SQLComparisonOperator";
-import { SQLAttributes } from "../sql/SQLAttributes";
-import { AbstractModel } from "../AbstractModel";
-import {Query} from "../Query";
-import {SQLValueAttributes} from "../sql/SQLValueAttributes";
+import { BaseFacade } from "./BaseFacade";
+import { Filter } from "./db/filter/Filter";
+import { SQLComparisonOperator } from "./db/sql/enums/SQLComparisonOperator";
+import { SQLAttributes } from "./db/sql/SQLAttributes";
+import { AbstractModel } from "./db/AbstractModel";
+import {Query} from "./db/Query";
+import {SQLValueAttributes} from "./db/sql/SQLValueAttributes";
 
 /**
  * Base facade for entities

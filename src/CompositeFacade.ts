@@ -1,9 +1,9 @@
-import { EntityFacade } from "../entity/EntityFacade";
-import { Filter } from "../filter/Filter";
-import { Ordering } from "../order/Ordering";
-import { SQLOperator } from "../sql/enums/SQLOperator";
-import { AbstractModel } from "../AbstractModel";
-import {Query} from "../Query";
+import { EntityFacade } from "./EntityFacade";
+import { Filter } from "./db/filter/Filter";
+import { Ordering } from "./db/order/Ordering";
+import { SQLOperator } from "./db/sql/enums/SQLOperator";
+import { AbstractModel } from "./db/AbstractModel";
+import {Query} from "./db/Query";
 
 /**
  * Base class for composite facades
