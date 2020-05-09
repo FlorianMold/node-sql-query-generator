@@ -16,7 +16,7 @@ module.exports = {
     ],
     testEnvironment: "node",
     coveragePathIgnorePatterns: [
-        '/node_modules/',
-        '/test/example/',
+        "/node_modules/",
+        "/test/example/",
     ]
 };
