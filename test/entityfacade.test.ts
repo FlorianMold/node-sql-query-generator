@@ -4,6 +4,7 @@ import {SQLComparisonOperator} from "../src/db/sql/enums/SQLComparisonOperator";
 import {SQLOrder} from "../src/db/sql/enums/SQLOrder";
 import {User} from "./example/User";
 import {Filter} from "../src/db/filter/Filter";
+import {validate} from "mysql-query-validator";
 
 describe("EntityFacade Tests", () => {
 
@@ -31,6 +32,8 @@ describe("EntityFacade Tests", () => {
             expect(query.query)
                 .toEqual("SELECT u.id AS idu, u.created_at AS created_atu, u.modified_at AS modified_atu, u.email AS emailu, u.password AS passwordu, u.forename AS forenameu, u.lastname AS lastnameu, u.gender AS genderu, u.last_login AS last_loginu, u.failed_login_attempts AS failed_login_attemptsu, u.login_cooldown AS login_cooldownu, u.status AS statusu, u.resetcode AS resetcodeu, u.resetcode_validuntil AS resetcode_validuntilu FROM users AS u WHERE (( u.id = ? ))");
             expect(query.params).toContain(1);
+
+            expect(() => validate(query.query)).not.toThrow(Error);
         });
 
         it("Test select by email-filter.", () => {
@@ -42,6 +45,8 @@ describe("EntityFacade Tests", () => {
             expect(query.query)
                 .toEqual("SELECT u.id AS idu, u.created_at AS created_atu, u.modified_at AS modified_atu, u.email AS emailu, u.password AS passwordu, u.forename AS forenameu, u.lastname AS lastnameu, u.gender AS genderu, u.last_login AS last_loginu, u.failed_login_attempts AS failed_login_attemptsu, u.login_cooldown AS login_cooldownu, u.status AS statusu, u.resetcode AS resetcodeu, u.resetcode_validuntil AS resetcode_validuntilu FROM users AS u WHERE (( u.email = ? ))");
             expect(query.params).toContain("testmail@example.org");
+
+            expect(() => validate(query.query)).not.toThrow(Error);
         });
 
         it("Test select with in-operator.", () => {
@@ -52,6 +57,8 @@ describe("EntityFacade Tests", () => {
             const query = facade.get();
             expect(query.query)
                 .toEqual("SELECT u.id AS idu, u.created_at AS created_atu, u.modified_at AS modified_atu, u.email AS emailu, u.password AS passwordu, u.forename AS forenameu, u.lastname AS lastnameu, u.gender AS genderu, u.last_login AS last_loginu, u.failed_login_attempts AS failed_login_attemptsu, u.login_cooldown AS login_cooldownu, u.status AS statusu, u.resetcode AS resetcodeu, u.resetcode_validuntil AS resetcode_validuntilu FROM users AS u WHERE (( u.gender IN (?) ))");
+
+            expect(() => validate(query.query)).not.toThrow(Error);
         });
 
         it("Test select with sub-filter", () => {
@@ -72,6 +79,8 @@ describe("EntityFacade Tests", () => {
             expect(query.query)
                 .toEqual("SELECT u.id AS idu, u.created_at AS created_atu, u.modified_at AS modified_atu, u.email AS emailu, u.password AS passwordu, u.forename AS forenameu, u.lastname AS lastnameu, u.gender AS genderu, u.last_login AS last_loginu, u.failed_login_attempts AS failed_login_attemptsu, u.login_cooldown AS login_cooldownu, u.status AS statusu, u.resetcode AS resetcodeu, u.resetcode_validuntil AS resetcode_validuntilu FROM users AS u WHERE (( u.email = ? ) AND (( u.forename = ? ) OR ( u.lastname = ? )))");
             expect(query.params).toContain("testmail@example.org");
+
+            expect(() => validate(query.query)).not.toThrow(Error);
         });
 
         it("Test select by greater-than operator.", () => {
@@ -83,6 +92,8 @@ describe("EntityFacade Tests", () => {
             expect(query.query)
                 .toEqual("SELECT u.id AS idu, u.created_at AS created_atu, u.modified_at AS modified_atu, u.email AS emailu, u.password AS passwordu, u.forename AS forenameu, u.lastname AS lastnameu, u.gender AS genderu, u.last_login AS last_loginu, u.failed_login_attempts AS failed_login_attemptsu, u.login_cooldown AS login_cooldownu, u.status AS statusu, u.resetcode AS resetcodeu, u.resetcode_validuntil AS resetcode_validuntilu FROM users AS u WHERE (( u.failed_login_attempts > ? ))");
             expect(query.params).toContain(1);
+
+            expect(() => validate(query.query)).not.toThrow(Error);
         });
 
         it("Test select by email- and name-filter.", () => {
@@ -96,6 +107,8 @@ describe("EntityFacade Tests", () => {
                 .toEqual("SELECT u.id AS idu, u.created_at AS created_atu, u.modified_at AS modified_atu, u.email AS emailu, u.password AS passwordu, u.forename AS forenameu, u.lastname AS lastnameu, u.gender AS genderu, u.last_login AS last_loginu, u.failed_login_attempts AS failed_login_attemptsu, u.login_cooldown AS login_cooldownu, u.status AS statusu, u.resetcode AS resetcodeu, u.resetcode_validuntil AS resetcode_validuntilu FROM users AS u WHERE (( u.email = ? ) AND ( u.forename = ? ))");
             expect(query.params).toContain("testmail@example.org");
             expect(query.params).toContain("John");
+
+            expect(() => validate(query.query)).not.toThrow(Error);
         });
 
         it("Test select with order-by.", () => {
@@ -107,6 +120,8 @@ describe("EntityFacade Tests", () => {
             expect(query.query)
                 .toEqual("SELECT u.id AS idu, u.created_at AS created_atu, u.modified_at AS modified_atu, u.email AS emailu, u.password AS passwordu, u.forename AS forenameu, u.lastname AS lastnameu, u.gender AS genderu, u.last_login AS last_loginu, u.failed_login_attempts AS failed_login_attemptsu, u.login_cooldown AS login_cooldownu, u.status AS statusu, u.resetcode AS resetcodeu, u.resetcode_validuntil AS resetcode_validuntilu FROM users AS u WHERE (( u.id = ? )) ORDER BY u.id ASC");
             expect(query.params).toContain(1);
+
+            expect(() => validate(query.query)).not.toThrow(Error);
         });
 
         it("Test select with order-by directly in the facade.", () => {
@@ -117,6 +132,8 @@ describe("EntityFacade Tests", () => {
             expect(query.query)
                 .toEqual("SELECT u.id AS idu, u.created_at AS created_atu, u.modified_at AS modified_atu, u.email AS emailu, u.password AS passwordu, u.forename AS forenameu, u.lastname AS lastnameu, u.gender AS genderu, u.last_login AS last_loginu, u.failed_login_attempts AS failed_login_attemptsu, u.login_cooldown AS login_cooldownu, u.status AS statusu, u.resetcode AS resetcodeu, u.resetcode_validuntil AS resetcode_validuntilu FROM users AS u WHERE (( u.id = ? )) ORDER BY u.id ASC");
             expect(query.params).toContain(1);
+
+            expect(() => validate(query.query)).not.toThrow(Error);
         });
 
         it("Test select with multiple order-bys.", () => {
@@ -129,6 +146,8 @@ describe("EntityFacade Tests", () => {
             expect(query.query)
                 .toEqual("SELECT u.id AS idu, u.created_at AS created_atu, u.modified_at AS modified_atu, u.email AS emailu, u.password AS passwordu, u.forename AS forenameu, u.lastname AS lastnameu, u.gender AS genderu, u.last_login AS last_loginu, u.failed_login_attempts AS failed_login_attemptsu, u.login_cooldown AS login_cooldownu, u.status AS statusu, u.resetcode AS resetcodeu, u.resetcode_validuntil AS resetcode_validuntilu FROM users AS u WHERE (( u.id = ? )) ORDER BY u.id ASC, u.email DESC");
             expect(query.params).toContain(1);
+
+            expect(() => validate(query.query)).not.toThrow(Error);
         });
 
         it("Test select with excluded sql-attributes.", () => {
@@ -137,6 +156,8 @@ describe("EntityFacade Tests", () => {
             expect(query.query)
                 .toEqual("SELECT u.id AS idu, u.password AS passwordu, u.forename AS forenameu, u.lastname AS lastnameu, u.gender AS genderu, u.last_login AS last_loginu, u.failed_login_attempts AS failed_login_attemptsu, u.login_cooldown AS login_cooldownu, u.status AS statusu, u.resetcode AS resetcodeu, u.resetcode_validuntil AS resetcode_validuntilu FROM users AS u");
             expect(query.params).toHaveLength(0);
+
+            expect(() => validate(query.query)).not.toThrow(Error);
         });
 
     });
@@ -156,6 +177,8 @@ describe("EntityFacade Tests", () => {
             expect(query.params).toContain("John");
             expect(query.params).toContain("Doe");
             expect(query.params).toContain(1);
+
+            expect(() => validate(query.query)).not.toThrow(Error);
         });
 
         it("Test update-query with id.", () => {
@@ -176,6 +199,8 @@ describe("EntityFacade Tests", () => {
             expect(query.params).toContain(u.id);
             u.createdAt;
             u.modifiedAt;
+
+            expect(() => validate(query.query)).not.toThrow(Error);
         });
     });
 
@@ -194,6 +219,8 @@ describe("EntityFacade Tests", () => {
             expect(query.params).toContain("John");
             expect(query.params).toContain("Doe");
             expect(query.params).toContain(1);
+
+            expect(() => validate(query.query)).not.toThrow(Error);
         });
     });
 
@@ -203,6 +230,8 @@ describe("EntityFacade Tests", () => {
             const query = facade.delete();
             expect(query.query).toEqual("DELETE FROM users");
             expect(query.params).toHaveLength(0);
+
+            expect(() => validate(query.query)).not.toThrow(Error);
         });
 
         it("Test delete by id.", () => {
@@ -211,6 +240,8 @@ describe("EntityFacade Tests", () => {
             const query = facade.delete();
             expect(query.query).toEqual("DELETE FROM users WHERE (( id = ? ))");
             expect(query.params).toContain(1);
+
+            expect(() => validate(query.query)).not.toThrow(Error);
         });
 
         it("Test delete by email and id.", () => {
@@ -222,6 +253,8 @@ describe("EntityFacade Tests", () => {
             expect(query.query).toEqual("DELETE FROM users WHERE (( id = ? ) AND ( email = ? ))");
             expect(query.params).toContain(1);
             expect(query.params).toContain("testmail");
+
+            expect(() => validate(query.query)).not.toThrow(Error);
         });
     });
 });

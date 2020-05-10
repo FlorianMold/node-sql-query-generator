@@ -1,5 +1,6 @@
 import {RecipeCompositeFacade} from "./example/RecipeCompositeFacade";
 import {SQLOperator} from "../src/db/sql/enums/SQLOperator";
+import { validate } from "mysql-query-validator";
 
 describe("CompositeFacade Tests", () => {
 
@@ -21,6 +22,8 @@ describe("CompositeFacade Tests", () => {
             expect(query.query)
                 .toEqual("SELECT rec.id AS idrec, rec.created_at AS created_atrec, rec.modified_at AS modified_atrec, rec.name AS namerec, rec.description AS descriptionrec, rec.difficulty_id AS difficulty_idrec, rec.mealtime AS mealtimerec, recing.created_at AS created_atrecing, recing.modified_at AS modified_atrecing, recing.recipe_id AS recipe_idrecing, recing.ingredient_id AS ingredient_idrecing, ig.id AS idig, ig.created_at AS created_atig, ig.modified_at AS modified_atig, ig.name AS nameig, ig.image_id AS image_idig, ig.food_category_id AS food_category_idig FROM recipes AS rec JOIN recipes_ingredients recing ON ( recing.recipe_id = rec.id ) LEFT JOIN ingredients ig ON ( ig.id = recing.ingredient_id ) WHERE (( rec.id = ? ))");
             expect(query.params).toContain(1);
+
+            expect(() => validate(query.query)).not.toThrow(Error);
         });
 
         it("Test select.", () => {
@@ -28,6 +31,8 @@ describe("CompositeFacade Tests", () => {
             const query = facade.get();
             expect(query.query)
                 .toEqual("SELECT rec.id AS idrec, rec.created_at AS created_atrec, rec.modified_at AS modified_atrec, rec.name AS namerec, rec.description AS descriptionrec, rec.difficulty_id AS difficulty_idrec, rec.mealtime AS mealtimerec, recing.created_at AS created_atrecing, recing.modified_at AS modified_atrecing, recing.recipe_id AS recipe_idrecing, recing.ingredient_id AS ingredient_idrecing, ig.id AS idig, ig.created_at AS created_atig, ig.modified_at AS modified_atig, ig.name AS nameig, ig.image_id AS image_idig, ig.food_category_id AS food_category_idig FROM recipes AS rec JOIN recipes_ingredients recing ON ( recing.recipe_id = rec.id ) LEFT JOIN ingredients ig ON ( ig.id = recing.ingredient_id )");
+
+            expect(() => validate(query.query)).not.toThrow(Error);
         });
 
         it("Test select with multiple filters.", () => {
@@ -41,6 +46,8 @@ describe("CompositeFacade Tests", () => {
                 .toEqual("SELECT rec.id AS idrec, rec.created_at AS created_atrec, rec.modified_at AS modified_atrec, rec.name AS namerec, rec.description AS descriptionrec, rec.difficulty_id AS difficulty_idrec, rec.mealtime AS mealtimerec, recing.created_at AS created_atrecing, recing.modified_at AS modified_atrecing, recing.recipe_id AS recipe_idrecing, recing.ingredient_id AS ingredient_idrecing, ig.id AS idig, ig.created_at AS created_atig, ig.modified_at AS modified_atig, ig.name AS nameig, ig.image_id AS image_idig, ig.food_category_id AS food_category_idig FROM recipes AS rec JOIN recipes_ingredients recing ON ( recing.recipe_id = rec.id ) LEFT JOIN ingredients ig ON ( ig.id = recing.ingredient_id ) WHERE ((( ig.name = ? )) AND (( rec.id = ? )))");
             expect(query.params).toContain("pepper");
             expect(query.params).toContain(1);
+
+            expect(() => validate(query.query)).not.toThrow(Error);
         });
 
         it("Test clear filters.", () => {
@@ -67,6 +74,8 @@ describe("CompositeFacade Tests", () => {
             expect(query.query)
                 .toEqual("SELECT rec.id AS idrec, rec.created_at AS created_atrec, rec.modified_at AS modified_atrec, rec.name AS namerec, rec.description AS descriptionrec, rec.difficulty_id AS difficulty_idrec, rec.mealtime AS mealtimerec, recing.created_at AS created_atrecing, recing.modified_at AS modified_atrecing, recing.recipe_id AS recipe_idrecing, recing.ingredient_id AS ingredient_idrecing, ig.id AS idig, ig.created_at AS created_atig, ig.modified_at AS modified_atig, ig.name AS nameig, ig.image_id AS image_idig, ig.food_category_id AS food_category_idig FROM recipes AS rec JOIN recipes_ingredients recing ON ( recing.recipe_id = rec.id ) LEFT JOIN ingredients ig ON ( ig.id = recing.ingredient_id ) WHERE ((( ig.name = ? )) OR (( rec.id = ? )))");
             expect(query.params).toContain("pepper");
+
+            expect(() => validate(query.query)).not.toThrow(Error);
         });
 
         it("Test do not auto-combine filter", () => {
@@ -80,6 +89,8 @@ describe("CompositeFacade Tests", () => {
             expect(query.query)
                 .toEqual("SELECT rec.id AS idrec, rec.created_at AS created_atrec, rec.modified_at AS modified_atrec, rec.name AS namerec, rec.description AS descriptionrec, rec.difficulty_id AS difficulty_idrec, rec.mealtime AS mealtimerec, recing.created_at AS created_atrecing, recing.modified_at AS modified_atrecing, recing.recipe_id AS recipe_idrecing, recing.ingredient_id AS ingredient_idrecing, ig.id AS idig, ig.created_at AS created_atig, ig.modified_at AS modified_atig, ig.name AS nameig, ig.image_id AS image_idig, ig.food_category_id AS food_category_idig FROM recipes AS rec JOIN recipes_ingredients recing ON ( recing.recipe_id = rec.id ) LEFT JOIN ingredients ig ON ( ig.id = recing.ingredient_id ) WHERE (( rec.id = ? ))");
             expect(query.params).toContain(1);
+
+            expect(() => validate(query.query)).not.toThrow(Error);
         });
 
     });
