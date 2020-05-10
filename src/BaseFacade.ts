@@ -25,7 +25,7 @@ import {Query} from "./db/Query";
 /**
  * Base class for crud operations with the database.
  */
-export abstract class BaseFacade<EntityType extends AbstractModel<EntityType>> {
+export abstract class BaseFacade<EntityType extends AbstractModel> {
 
     /**
      * Combine the joins of the different sub-facades and returns them as a list.
@@ -70,24 +70,8 @@ export abstract class BaseFacade<EntityType extends AbstractModel<EntityType>> {
         return this._tableName;
     }
 
-    set tableName(value: string) {
-        this._tableName = value;
-    }
-
     get tableAlias(): string {
         return this._tableAlias;
-    }
-
-    set tableAlias(value: string) {
-        this._tableAlias = value;
-    }
-
-    get attributes(): string[] {
-        return this._attributes;
-    }
-
-    set attributes(value: string[]) {
-        this._attributes = value;
     }
 
     /**
@@ -140,7 +124,7 @@ export abstract class BaseFacade<EntityType extends AbstractModel<EntityType>> {
      *
      * @param column name of the column
      */
-    protected name(column: string): string {
+    public name(column: string): string {
         return column + this._tableAlias;
     }
 
@@ -179,8 +163,6 @@ export abstract class BaseFacade<EntityType extends AbstractModel<EntityType>> {
      * @param filter filter for selected (can be different from facade filter)
      */
     protected select(attributes: SQLAttributes, filter: Filter): Query {
-        this.joinAnalyzer();
-
         return this.getSelectQuery(attributes, filter);
     }
 
@@ -310,9 +292,7 @@ export abstract class BaseFacade<EntityType extends AbstractModel<EntityType>> {
      * @param prefix prefix before the sql attribute
      * @param entity entity to take values from
      */
-    protected getSQLValueAttributes(prefix: string, entity: EntityType): SQLValueAttributes {
-        return new SQLValueAttributes();
-    }
+    protected abstract getSQLValueAttributes(prefix: string, entity: EntityType): SQLValueAttributes;
 
     /**
      * Creates and returns an insert-query.
@@ -416,7 +396,7 @@ export abstract class BaseFacade<EntityType extends AbstractModel<EntityType>> {
      * an error message, if a specific limit is exceeded.
      * Counts the inner- and left-joins and prints the to the console.
      */
-    private joinAnalyzer(): void {
+    public joinAnalyzer() {
         let oneToManyJoinAmount = 0;
         let oneToOneJoinAmount = 0;
 
@@ -441,16 +421,12 @@ export abstract class BaseFacade<EntityType extends AbstractModel<EntityType>> {
             }
         }
 
-        if (this.joins.length > 0) {
-            console.log( `Statement contains ${this.joins.length} joins! (${leftJoinAmount} left-joins, ` +
-                `${innerJoinAmount} inner-joins, ${oneToManyJoinAmount} one-to-many, ` +
-                `${oneToOneJoinAmount} one-to-one)!`);
-
-            const warnToManyJoins = 5;
-            if (oneToManyJoinAmount >= warnToManyJoins) {
-                console.log( `Safe amount of one-to-many joins (${oneToManyJoinAmount}) exceeded!`);
-            }
-        }
+        return {
+            oneToManyJoinAmount,
+            oneToOneJoinAmount,
+            leftJoinAmount,
+            innerJoinAmount
+        };
     }
 }
 

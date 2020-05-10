@@ -10,7 +10,7 @@ import {SQLValueAttributes} from "./db/sql/SQLValueAttributes";
  * Base facade for entities
  * Provides common methods for retrieving values from the database.
  */
-export abstract class EntityFacade<EntityType extends AbstractModel<EntityType>> extends BaseFacade<EntityType> {
+export abstract class EntityFacade<EntityType extends AbstractModel> extends BaseFacade<EntityType> {
 
     /**
      * @param tableName table-name of the entity

@@ -9,7 +9,7 @@ import {Query} from "./db/Query";
  * Base class for composite facades
  * Provides methods that can handle multiple filters and multiple order-bys
  */
-export abstract class CompositeFacade<EntityType extends AbstractModel<EntityType>> extends EntityFacade<EntityType> {
+export abstract class CompositeFacade<EntityType extends AbstractModel> extends EntityFacade<EntityType> {
 
     private _sqlOperator: SQLOperator = SQLOperator.AND;
     private _autoCombineFilter = true;
@@ -54,9 +54,7 @@ export abstract class CompositeFacade<EntityType extends AbstractModel<EntityTyp
     /**
      * Returns all sub facade-filters of the composite-facade as an array.
      */
-    protected get filters(): Filter[] {
-        return [];
-    }
+    protected abstract get filters(): Filter[];
 
     /**
      * Clears every filter of the composite-facade.
@@ -108,9 +106,7 @@ export abstract class CompositeFacade<EntityType extends AbstractModel<EntityTyp
     /**
      * Returns all sub facade order-bys of the facade as an array.
      */
-    protected get orderBys(): Ordering[] {
-        return [];
-    }
+    protected abstract get orderBys(): Ordering[];
 
     /**
      * Combines the composite facade order-bys to one order-by.
