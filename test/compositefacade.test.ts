@@ -27,7 +27,7 @@ describe("CompositeFacade Tests", () => {
             const facade = new RecipeCompositeFacade();
             const query = facade.get();
             expect(query.query)
-                .toEqual("SELECT rec.id AS idrec, rec.created_at AS created_atrec, rec.modified_at AS modified_atrec, rec.name AS namerec, rec.description AS descriptionrec, rec.difficulty_id AS difficulty_idrec, rec.mealtime AS mealtimerec, recing.created_at AS created_atrecing, recing.modified_at AS modified_atrecing, recing.recipe_id AS recipe_idrecing, recing.ingredient_id AS ingredient_idrecing, ig.id AS idig, ig.created_at AS created_atig, ig.modified_at AS modified_atig, ig.name AS nameig, ig.image_id AS image_idig, ig.food_category_id AS food_category_idig FROM recipes AS rec JOIN recipes_ingredients recing ON ( recing.recipe_id = rec.id ) LEFT JOIN ingredients ig ON ( ig.id = recing.ingredient_id ) ");
+                .toEqual("SELECT rec.id AS idrec, rec.created_at AS created_atrec, rec.modified_at AS modified_atrec, rec.name AS namerec, rec.description AS descriptionrec, rec.difficulty_id AS difficulty_idrec, rec.mealtime AS mealtimerec, recing.created_at AS created_atrecing, recing.modified_at AS modified_atrecing, recing.recipe_id AS recipe_idrecing, recing.ingredient_id AS ingredient_idrecing, ig.id AS idig, ig.created_at AS created_atig, ig.modified_at AS modified_atig, ig.name AS nameig, ig.image_id AS image_idig, ig.food_category_id AS food_category_idig FROM recipes AS rec JOIN recipes_ingredients recing ON ( recing.recipe_id = rec.id ) LEFT JOIN ingredients ig ON ( ig.id = recing.ingredient_id )");
         });
 
         it("Test select with multiple filters.", () => {
@@ -61,7 +61,7 @@ describe("CompositeFacade Tests", () => {
             const filter = facade.filter;
             filter.addFilterCondition("id", 1);
             facade.ingredientFilter.addFilterCondition("name", "pepper");
-            facade.sqlOperator = SQLOperator.OR
+            facade.sqlOperator = SQLOperator.OR;
 
             const query = facade.get();
             expect(query.query)

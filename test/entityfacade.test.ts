@@ -135,7 +135,7 @@ describe("EntityFacade Tests", () => {
             const facade = new UserFacade("u");
             const query = facade.get(["created_at", "modified_at", "email"]);
             expect(query.query)
-                .toEqual("SELECT u.id AS idu, u.password AS passwordu, u.forename AS forenameu, u.lastname AS lastnameu, u.gender AS genderu, u.last_login AS last_loginu, u.failed_login_attempts AS failed_login_attemptsu, u.login_cooldown AS login_cooldownu, u.status AS statusu, u.resetcode AS resetcodeu, u.resetcode_validuntil AS resetcode_validuntilu FROM users AS u ");
+                .toEqual("SELECT u.id AS idu, u.password AS passwordu, u.forename AS forenameu, u.lastname AS lastnameu, u.gender AS genderu, u.last_login AS last_loginu, u.failed_login_attempts AS failed_login_attemptsu, u.login_cooldown AS login_cooldownu, u.status AS statusu, u.resetcode AS resetcodeu, u.resetcode_validuntil AS resetcode_validuntilu FROM users AS u");
             expect(query.params).toHaveLength(0);
         });
 
@@ -151,7 +151,7 @@ describe("EntityFacade Tests", () => {
 
             const facade = new UserFacade("u");
             const query = facade.update(u);
-            expect(query.query).toEqual("UPDATE users u SET u.`email` = ?, u.`forename` = ?, u.`lastname` = ?, u.`gender` = ?, u.`modified_at` = ? ");
+            expect(query.query).toEqual("UPDATE users u SET u.`email` = ?, u.`forename` = ?, u.`lastname` = ?, u.`gender` = ?, u.`modified_at` = ?");
             expect(query.params).toContain("testmail@example.org");
             expect(query.params).toContain("John");
             expect(query.params).toContain("Doe");
@@ -201,7 +201,7 @@ describe("EntityFacade Tests", () => {
         it("Test delete-query.", () => {
             const facade = new UserFacade("u");
             const query = facade.delete();
-            expect(query.query).toEqual("DELETE FROM users ");
+            expect(query.query).toEqual("DELETE FROM users");
             expect(query.params).toHaveLength(0);
         });
 

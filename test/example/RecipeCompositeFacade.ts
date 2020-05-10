@@ -24,6 +24,7 @@ import {JoinType} from "../../src/db/sql/enums/JoinType";
 import {JoinCardinality} from "../../src/db/sql/enums/JoinCardinality";
 import {Filter} from "../../src/db/filter/Filter";
 import {Ordering} from "../../src/db/order/Ordering";
+import {SQLValueAttributes} from "../../src/db/sql/SQLValueAttributes";
 
 export class RecipeCompositeFacade extends CompositeFacade<Recipe> {
 
@@ -149,4 +150,5 @@ export class RecipeCompositeFacade extends CompositeFacade<Recipe> {
     get withFoodCategoryJoin(): boolean {
         return this._withFoodCategoryJoin;
     }
+
 }

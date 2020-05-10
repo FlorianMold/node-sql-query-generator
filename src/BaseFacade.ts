@@ -230,7 +230,9 @@ export abstract class BaseFacade<EntityType extends AbstractModel> {
      * @param prefix prefix before the sql attribute
      * @param entity entity to take values from
      */
-    protected abstract getSQLValueAttributes(prefix: string, entity: EntityType): SQLValueAttributes;
+    protected getSQLValueAttributes(prefix: string, entity: EntityType): SQLValueAttributes {
+        return new SQLValueAttributes();
+    }
 
     /**
      * Creates and returns an insert-query.
@@ -250,7 +252,7 @@ export abstract class BaseFacade<EntityType extends AbstractModel> {
         const insertQuery: BakedQuery = npq.bake();
         const params: any[] = insertQuery.fillParameters();
 
-        return {query: insertQuery.getBakedSQL(), params};
+        return {query: insertQuery.getBakedSQL().trim(), params};
     }
 
     /**
@@ -278,7 +280,7 @@ export abstract class BaseFacade<EntityType extends AbstractModel> {
         const selectQuery: BakedQuery = npq.bake();
         const params: any[] = selectQuery.fillParameters();
 
-        return {query: selectQuery.getBakedSQL(), params};
+        return {query: selectQuery.getBakedSQL().trim(), params};
     }
 
     /**
@@ -300,7 +302,7 @@ export abstract class BaseFacade<EntityType extends AbstractModel> {
         const updateQuery: BakedQuery = npq.bake();
         const params: any[] = updateQuery.fillParameters();
 
-        return {query: updateQuery.getBakedSQL(), params};
+        return {query: updateQuery.getBakedSQL().trim(), params};
     }
 
     /**
@@ -325,7 +327,7 @@ export abstract class BaseFacade<EntityType extends AbstractModel> {
         const regex = new RegExp(this._tableAlias + "\\.", "g");
         queryStr = queryStr.replace(regex, ""); // workaround for delete
 
-        return {query: queryStr, params};
+        return {query: queryStr.trim(), params};
     }
 
     /**
