@@ -1,8 +1,8 @@
-import {UserFacade} from "./example/UserFacade";
+import {UserFacade} from "../examples/UserFacade";
 import {SQLOperator} from "../src/db/sql/enums/SQLOperator";
 import {SQLComparisonOperator} from "../src/db/sql/enums/SQLComparisonOperator";
 import {SQLOrder} from "../src/db/sql/enums/SQLOrder";
-import {User} from "./example/User";
+import {User} from "../examples/User";
 import {Filter} from "../src/db/filter/Filter";
 import {validate} from "mysql-query-validator";
 
@@ -39,12 +39,12 @@ describe("EntityFacade Tests", () => {
         it("Test select by email-filter.", () => {
             const facade = new UserFacade("u");
             const filter = facade.filter;
-            filter.addFilterCondition("email", "testmail@example.org");
+            filter.addFilterCondition("email", "testmail@examples.org");
 
             const query = facade.get();
             expect(query.query)
                 .toEqual("SELECT u.id AS idu, u.created_at AS created_atu, u.modified_at AS modified_atu, u.email AS emailu, u.password AS passwordu, u.forename AS forenameu, u.lastname AS lastnameu, u.gender AS genderu, u.last_login AS last_loginu, u.failed_login_attempts AS failed_login_attemptsu, u.login_cooldown AS login_cooldownu, u.status AS statusu, u.resetcode AS resetcodeu, u.resetcode_validuntil AS resetcode_validuntilu FROM users AS u WHERE (( u.email = ? ))");
-            expect(query.params).toContain("testmail@example.org");
+            expect(query.params).toContain("testmail@examples.org");
 
             expect(() => validate(query.query)).not.toThrow(Error);
         });
@@ -64,7 +64,7 @@ describe("EntityFacade Tests", () => {
         it("Test select with sub-filter", () => {
             const facade = new UserFacade("u");
             const filter = facade.filter;
-            filter.addFilterCondition("email", "testmail@example.org");
+            filter.addFilterCondition("email", "testmail@examples.org");
 
             filter.addOperator(SQLOperator.AND);
 
@@ -78,7 +78,7 @@ describe("EntityFacade Tests", () => {
             const query = facade.get();
             expect(query.query)
                 .toEqual("SELECT u.id AS idu, u.created_at AS created_atu, u.modified_at AS modified_atu, u.email AS emailu, u.password AS passwordu, u.forename AS forenameu, u.lastname AS lastnameu, u.gender AS genderu, u.last_login AS last_loginu, u.failed_login_attempts AS failed_login_attemptsu, u.login_cooldown AS login_cooldownu, u.status AS statusu, u.resetcode AS resetcodeu, u.resetcode_validuntil AS resetcode_validuntilu FROM users AS u WHERE (( u.email = ? ) AND (( u.forename = ? ) OR ( u.lastname = ? )))");
-            expect(query.params).toContain("testmail@example.org");
+            expect(query.params).toContain("testmail@examples.org");
 
             expect(() => validate(query.query)).not.toThrow(Error);
         });
@@ -99,13 +99,13 @@ describe("EntityFacade Tests", () => {
         it("Test select by email- and name-filter.", () => {
             const facade = new UserFacade("u");
             const filter = facade.filter;
-            filter.addFilterCondition("email", "testmail@example.org", SQLComparisonOperator.EQUAL, SQLOperator.AND);
+            filter.addFilterCondition("email", "testmail@examples.org", SQLComparisonOperator.EQUAL, SQLOperator.AND);
             filter.addFilterCondition("forename", "John");
 
             const query = facade.get();
             expect(query.query)
                 .toEqual("SELECT u.id AS idu, u.created_at AS created_atu, u.modified_at AS modified_atu, u.email AS emailu, u.password AS passwordu, u.forename AS forenameu, u.lastname AS lastnameu, u.gender AS genderu, u.last_login AS last_loginu, u.failed_login_attempts AS failed_login_attemptsu, u.login_cooldown AS login_cooldownu, u.status AS statusu, u.resetcode AS resetcodeu, u.resetcode_validuntil AS resetcode_validuntilu FROM users AS u WHERE (( u.email = ? ) AND ( u.forename = ? ))");
-            expect(query.params).toContain("testmail@example.org");
+            expect(query.params).toContain("testmail@examples.org");
             expect(query.params).toContain("John");
 
             expect(() => validate(query.query)).not.toThrow(Error);
@@ -165,7 +165,7 @@ describe("EntityFacade Tests", () => {
     describe("Test update-query.", () => {
         it("Test update-query.", () => {
             const u = new User();
-            u.email = "testmail@example.org";
+            u.email = "testmail@examples.org";
             u.forename = "John";
             u.lastname = "Doe";
             u.gender = 1;
@@ -173,7 +173,7 @@ describe("EntityFacade Tests", () => {
             const facade = new UserFacade("u");
             const query = facade.update(u);
             expect(query.query).toEqual("UPDATE users u SET u.`email` = ?, u.`forename` = ?, u.`lastname` = ?, u.`gender` = ?, u.`modified_at` = ?");
-            expect(query.params).toContain("testmail@example.org");
+            expect(query.params).toContain("testmail@examples.org");
             expect(query.params).toContain("John");
             expect(query.params).toContain("Doe");
             expect(query.params).toContain(1);
@@ -184,7 +184,7 @@ describe("EntityFacade Tests", () => {
         it("Test update-query with id.", () => {
             const u = new User();
             u.id = 1;
-            u.email = "testmail@example.org";
+            u.email = "testmail@examples.org";
             u.forename = "John";
             u.lastname = "Doe";
             u.gender = 1;
@@ -207,7 +207,7 @@ describe("EntityFacade Tests", () => {
     describe("Test insert-query.", () => {
         it("Test insert-query.", () => {
             const u = new User();
-            u.email = "testmail@example.org";
+            u.email = "testmail@examples.org";
             u.forename = "John";
             u.lastname = "Doe";
             u.gender = 1;
@@ -215,7 +215,7 @@ describe("EntityFacade Tests", () => {
             const facade = new UserFacade("u");
             const query = facade.insert(u);
             expect(query.query).toEqual("INSERT INTO users( users.email, users.forename, users.lastname, users.gender, users.created_at ) VALUES( ?, ?, ?, ?, ? )");
-            expect(query.params).toContain("testmail@example.org");
+            expect(query.params).toContain("testmail@examples.org");
             expect(query.params).toContain("John");
             expect(query.params).toContain("Doe");
             expect(query.params).toContain(1);

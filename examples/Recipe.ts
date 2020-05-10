@@ -1,6 +1,6 @@
 
 import { Ingredient } from "./Ingredient";
-import {AbstractModel} from "../../src/db/AbstractModel";
+import {AbstractModel} from "../src/db/AbstractModel";
 
 export class Recipe extends AbstractModel {
     private _name: string;

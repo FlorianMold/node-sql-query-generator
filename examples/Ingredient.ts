@@ -1,4 +1,4 @@
-import {AbstractModel} from "../../src/db/AbstractModel";
+import {AbstractModel} from "../src/db/AbstractModel";
 
 export class Ingredient extends AbstractModel {
   private _name: string;

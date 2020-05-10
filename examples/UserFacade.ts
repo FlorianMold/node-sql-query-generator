@@ -1,7 +1,7 @@
-import {SQLValueAttributes} from "../../src/db/sql/SQLValueAttributes";
-import {SQLValueAttribute} from "../../src/db/sql/SQLValueAttribute";
-import {SQLAttributes} from "../../src/db/sql/SQLAttributes";
-import {EntityFacade} from "../../src/EntityFacade";
+import {SQLValueAttributes} from "../src/db/sql/SQLValueAttributes";
+import {SQLValueAttribute} from "../src/db/sql/SQLValueAttribute";
+import {SQLAttributes} from "../src/db/sql/SQLAttributes";
+import {EntityFacade} from "../src/EntityFacade";
 import {User} from "./User";
 
 export class UserFacade extends EntityFacade<User> {

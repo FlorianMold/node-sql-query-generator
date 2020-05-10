@@ -7,14 +7,14 @@
  * contained Joins:
  * - difficulties (1:1)
  */
-import {CompositeFacade} from "../../src/CompositeFacade";
+import {CompositeFacade} from "../src/CompositeFacade";
 import {Recipe} from "./Recipe";
-import {SQLAttributes} from "../../src/db/sql/SQLAttributes";
-import {SQLValueAttributes} from "../../src/db/sql/SQLValueAttributes";
-import {SQLValueAttribute} from "../../src/db/sql/SQLValueAttribute";
-import {SQLJoin} from "../../src/db/sql/SQLJoin";
-import {Filter} from "../../src/db/filter/Filter";
-import {Ordering} from "../../src/db/order/Ordering";
+import {SQLAttributes} from "../src/db/sql/SQLAttributes";
+import {SQLValueAttributes} from "../src/db/sql/SQLValueAttributes";
+import {SQLValueAttribute} from "../src/db/sql/SQLValueAttribute";
+import {SQLJoin} from "../src/db/sql/SQLJoin";
+import {Filter} from "../src/db/filter/Filter";
+import {Ordering} from "../src/db/order/Ordering";
 
 export class RecipeFacade extends CompositeFacade<Recipe> {
 

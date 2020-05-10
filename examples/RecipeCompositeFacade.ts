@@ -12,19 +12,19 @@
  * - ingredients (1:1)
  *   - food categories (1:1)
  */
-import {CompositeFacade} from "../../src/CompositeFacade";
+import {CompositeFacade} from "../src/CompositeFacade";
 import {RecipeFacade} from "./RecipeFacade";
 import {RecipeIngredientFacade} from "./RecipeIngredientFacade";
 import {IngredientFacade} from "./IngredientFacade";
-import {SQLAttributes} from "../../src/db/sql/SQLAttributes";
+import {SQLAttributes} from "../src/db/sql/SQLAttributes";
 import {Recipe} from "./Recipe";
-import {SQLJoin} from "../../src/db/sql/SQLJoin";
-import {SQLBlock} from "../../src/db/sql/SQLBlock";
-import {JoinType} from "../../src/db/sql/enums/JoinType";
-import {JoinCardinality} from "../../src/db/sql/enums/JoinCardinality";
-import {Filter} from "../../src/db/filter/Filter";
-import {Ordering} from "../../src/db/order/Ordering";
-import {SQLValueAttributes} from "../../src/db/sql/SQLValueAttributes";
+import {SQLJoin} from "../src/db/sql/SQLJoin";
+import {SQLBlock} from "../src/db/sql/SQLBlock";
+import {JoinType} from "../src/db/sql/enums/JoinType";
+import {JoinCardinality} from "../src/db/sql/enums/JoinCardinality";
+import {Filter} from "../src/db/filter/Filter";
+import {Ordering} from "../src/db/order/Ordering";
+import {SQLValueAttributes} from "../src/db/sql/SQLValueAttributes";
 
 export class RecipeCompositeFacade extends CompositeFacade<Recipe> {
 

@@ -1,6 +1,6 @@
-import {RecipeCompositeFacade} from "./example/RecipeCompositeFacade";
 import {SQLOperator} from "../src/db/sql/enums/SQLOperator";
 import { validate } from "mysql-query-validator";
+import {RecipeCompositeFacade} from "../examples/RecipeCompositeFacade";
 
 describe("CompositeFacade Tests", () => {
 

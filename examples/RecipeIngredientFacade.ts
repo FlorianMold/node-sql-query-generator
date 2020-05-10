@@ -1,10 +1,10 @@
 /**
  * Handles CRUD operations with the recipes-ingredients-entity.
  */
-import {EntityFacade} from "../../src/EntityFacade";
-import {SQLAttributes} from "../../src/db/sql/SQLAttributes";
-import {SQLValueAttributes} from "../../src/db/sql/SQLValueAttributes";
-import {SQLValueAttribute} from "../../src/db/sql/SQLValueAttribute";
+import {EntityFacade} from "../src/EntityFacade";
+import {SQLAttributes} from "../src/db/sql/SQLAttributes";
+import {SQLValueAttributes} from "../src/db/sql/SQLValueAttributes";
+import {SQLValueAttribute} from "../src/db/sql/SQLValueAttribute";
 import {RecipeIngredient} from "./RecipeIngredient";
 
 export class RecipeIngredientFacade extends EntityFacade<RecipeIngredient> {
