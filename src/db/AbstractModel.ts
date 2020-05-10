@@ -2,7 +2,7 @@
  * base model for all entities
  * contains attributes that all entities have in common
  */
-export abstract class AbstractModel<Entity extends AbstractModel<Entity>> {
+export abstract class AbstractModel {
   private _id: number;
   private _createdAt: Date;
   private _modifiedAt: Date;
@@ -35,18 +35,4 @@ export abstract class AbstractModel<Entity extends AbstractModel<Entity>> {
     this._modifiedAt = value;
   }
 
-  /**
-   * returns true if the object was already modified
-   */
-  get wasUpdated() {
-    return this._modifiedAt;
-  }
-
-  /**
-   * Compares two models.
-   * @param other other entity to compare
-   */
-  public equals(other: Entity) {
-    return this.id === other.id;
-  }
 }
