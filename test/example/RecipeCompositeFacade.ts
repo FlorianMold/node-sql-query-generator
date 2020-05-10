@@ -89,7 +89,7 @@ export class RecipeCompositeFacade extends CompositeFacade<Recipe> {
             );
             joins.push(new SQLJoin(
                 this._recipeIngredientFacade.tableName, this._recipeIngredientFacade.tableAlias, recipesIngredientsJoin,
-                JoinType.LEFT_JOIN, JoinCardinality.ONE_TO_MANY)
+                JoinType.JOIN, JoinCardinality.ONE_TO_MANY)
             );
 
             const ingredientsJoin: SQLBlock = new SQLBlock();
@@ -111,7 +111,7 @@ export class RecipeCompositeFacade extends CompositeFacade<Recipe> {
     /**
      * Returns all sub-facade filters of the facade as an array.
      */
-    protected get filters(): Filter[] {
+    public get filters(): Filter[] {
         return [
             this.ingredientFilter
         ];

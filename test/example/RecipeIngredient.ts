@@ -1,7 +1,7 @@
 import {AbstractModel} from "../../src/db/AbstractModel";
 
 
-export class RecipeIngredient extends AbstractModel<RecipeIngredient> {
+export class RecipeIngredient extends AbstractModel{
 
     private _recipeId: number;
     private _ingredientId: number;

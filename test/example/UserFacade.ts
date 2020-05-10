@@ -40,7 +40,7 @@ export class UserFacade extends EntityFacade<User> {
      * @param prefix prefix before the sql-attribute
      * @param user entity to take values from
      */
-    protected getSQLValueAttributes(prefix: string, user: User): SQLValueAttributes {
+    public getSQLValueAttributes(prefix: string, user: User): SQLValueAttributes {
         const attributes: SQLValueAttributes = new SQLValueAttributes();
 
         const emailAttribute: SQLValueAttribute = new SQLValueAttribute("email", prefix, user.email);

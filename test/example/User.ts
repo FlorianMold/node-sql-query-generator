@@ -1,6 +1,6 @@
 import {AbstractModel} from "../../src/db/AbstractModel";
 
-export class User extends AbstractModel<User> {
+export class User extends AbstractModel{
     private _email: string;
     private _password: string;
     private _forename: string;

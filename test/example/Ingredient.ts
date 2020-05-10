@@ -1,6 +1,6 @@
 import {AbstractModel} from "../../src/db/AbstractModel";
 
-export class Ingredient extends AbstractModel<Ingredient> {
+export class Ingredient extends AbstractModel {
   private _name: string;
   private _imageId: number;
   private _foodCategoryId: number;

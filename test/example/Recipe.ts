@@ -2,7 +2,7 @@
 import { Ingredient } from "./Ingredient";
 import {AbstractModel} from "../../src/db/AbstractModel";
 
-export class Recipe extends AbstractModel<Recipe> {
+export class Recipe extends AbstractModel {
     private _name: string;
     private _description: string;
     private _difficultyId: number;
