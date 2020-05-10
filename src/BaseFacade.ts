@@ -112,7 +112,7 @@ export abstract class BaseFacade<EntityType extends AbstractModel> {
     }
 
     /**
-     * Clear filter. Completly empties the filter.
+     * Clear filter. Completely empties the filter.
      */
     public clearFilter(): void {
         this._filter.clear();
@@ -154,10 +154,7 @@ export abstract class BaseFacade<EntityType extends AbstractModel> {
     }
 
     /**
-     * Executes an select query and returns the results as an array.
-     * Result rows are converted to an instance of the current entity.
-     * Execution time of the query is analysed and printed to the console
-     * if it exceeds certain limits, that defined in the .env.
+     * Returns the sql-query with the given filter.
      *
      * @param attributes attributes that should be retrieved
      * @param filter filter for selected (can be different from facade filter)
@@ -167,33 +164,13 @@ export abstract class BaseFacade<EntityType extends AbstractModel> {
     }
 
     /**
-     * Executes multiple insert queries and returns all inserted ids as an array.
-     * Watch the order of the queries. Statements are executed in this order. If no
-     * additional inserts are provided, than the insert-query of the of the current facade
-     * with the passed attributes is executed. Otherwise the insert-queries of the passed facades are
-     * executed with given entity in the specified order.
-     *
-     * - facade: facade to execute insert in
-     * - entity: entity to insert
-     * - callBackOnInsert: callback that is executed after the insert, last callback in array will not be executed
+     * Returns the insert-query.
      *
      * @param attributes name-value pairs of attributes that should be inserted
      */
     protected insertStatement(attributes: SQLValueAttributes): Query {
-        return this.getInsertQueryFn(attributes);
-    }
-
-    /**
-     * Returns a function for executing an insert query.
-     * Returned function can be executed to insert the specified row with the values.
-     * Returned function executes one insert statement.
-     *
-     * @param attributes attributes to take values for the insert
-     */
-    protected getInsertQueryFn: (attributes: SQLValueAttributes) => Query =
-        (attributes: SQLValueAttributes) => {
         return this.getInsertQuery(attributes);
-    };
+    }
 
     /**
      * Return attributes that are common to all inserts (created_at).
@@ -214,34 +191,13 @@ export abstract class BaseFacade<EntityType extends AbstractModel> {
     }
 
     /**
-     * Executes multiple update queries and returns the number of affected rows.
-     * Watch the order of the queries. Statements are executed in this order. If no
-     * additional updates are provided, than the update-query of the of the current facade
-     * with the passed attributes is executed. Otherwise the update-queries of the passed facades are
-     * executed with the given entity in the specified order.
-     *
-     * facade: facade to execute update in
-     * entity: entity to insert
+     * Returns the update-query.
      *
      * @param attributes name-value pairs of the entity that should be changed
      */
     protected updateStatement(attributes: SQLValueAttributes): Query {
-        return this.getUpdateQueryFn(attributes);
-    }
-
-    /**
-     * Returns a function for executing an update-query.
-     * Returned function can be executed to update the specified row(s) with the given values.
-     * Returned function executes exactly one update-statement.
-     *
-     * Checks if the facade has a non empty filter. If not the update-query can not be performed.
-     * This is a security reason that an update can't be performed on the whole table.
-     *
-     * @param attributes attributes for the update query
-     */
-    protected getUpdateQueryFn: (attributes: SQLValueAttributes) => Query = (attributes: SQLValueAttributes) => {
         return this.getUpdateQuery(attributes);
-    };
+    }
 
     /**
      * Return attributes that are common to all updates (modified_at).
@@ -262,29 +218,11 @@ export abstract class BaseFacade<EntityType extends AbstractModel> {
     }
 
     /**
-     * Executes multiple delete queries in a transaction and returns the number of affected rows.
-     * Watch the order of the queries. Statements are executed in this order. If no
-     * additional deletes are provided, than the delete-query of the of the current facade
-     * with the passed attributes is executed. Otherwise the delete-queries of the passed facades are
-     * executed with the given entity in the specified order.
-     *
+     * Returns the delete-statement.
      */
     protected deleteStatement(): Query {
-        return this.getDeleteQueryFn();
-    }
-
-    /**
-     * Returns the function for executing delete queries.
-     * Function can be executed to delete the specified entities.
-     * Returned function executes exactly one update-statement.
-     *
-     * Checks if the facade has a non empty filter. If not the update-query can not be performed.
-     * This is a security reason that an update can't be performed on the whole table.
-     *
-     */
-    protected getDeleteQueryFn: (attributes?: SQLValueAttributes) => Query = () => {
         return this.getDeleteQuery();
-    };
+    }
 
     /**
      * Returns sql-value attributes for insert-statements and update-statements.
@@ -297,7 +235,7 @@ export abstract class BaseFacade<EntityType extends AbstractModel> {
     /**
      * Creates and returns an insert-query.
      * Converts the filter of the facade to a sql-where clause and appends
-     * it the query. Returns an object of IQuery, which contains the query
+     * it the query. Returns an object of Query, which contains the query
      * and the replacement variables as an array.
      *
      * @param attributes columns that should be inserted
@@ -319,7 +257,7 @@ export abstract class BaseFacade<EntityType extends AbstractModel> {
      * Creates and returns a select-query.
      * Converts the filter of the facade to a sql-where clause and appends
      * it the query. Order-by are appended to the query afterwards. Returns an
-     * object of IQuery, which contains the query and the replacement
+     * object of Query, which contains the query and the replacement
      * variables as an array.
      *
      * @param attributes columns that should be selected
@@ -346,7 +284,7 @@ export abstract class BaseFacade<EntityType extends AbstractModel> {
     /**
      * Creates and returns an update-query.
      * Converts the filter of the facade to a sql-where clause and appends
-     * it to the query. Returns an object of IQuery, which contains the query
+     * it to the query. Returns an object of Query, which contains the query
      * and the replacement variables as an array.
      *
      * @param attributes columns that should be set for update
@@ -368,7 +306,7 @@ export abstract class BaseFacade<EntityType extends AbstractModel> {
     /**
      * Creates and returns a delete-query.
      * Converts the filter of the facade to a sql-where clause and appends it
-     * to the query. Returns an object of IQuery, which contains the query
+     * to the query. Returns an object of Query, which contains the query
      * and the replacement variables as an array.
      *
      * As a workaround the table-alias in the query is replaced, because it is
@@ -391,10 +329,7 @@ export abstract class BaseFacade<EntityType extends AbstractModel> {
     }
 
     /**
-     * Prints performance infos about the select query.
-     * Analyses the cardinality of the different joins and prints a warning or
-     * an error message, if a specific limit is exceeded.
-     * Counts the inner- and left-joins and prints the to the console.
+     * Counts the inner- and left-joins and the cardinality of the joins.
      */
     public joinAnalyzer() {
         let oneToManyJoinAmount = 0;
