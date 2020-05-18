@@ -1,5 +1,10 @@
 # Node.js SQL-query generator
 
+## Installation
+```typescript
+npm install @florianmold/node-sql-query-generator@1.0.0
+```
+
 ## Introduction
 This is a node.js query-generator for mysql. It is written in TypeScript and is 100% MIT licensed.
 
